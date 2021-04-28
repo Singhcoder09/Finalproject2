@@ -27,7 +27,7 @@
         "type": "image/png"
       }],
     "lang": "en-US",
-    "start_url": "/views/form.pug",
+    "start_url": "/views/layout.pug",
     "display": "standalone",
     "background_color": "white",
     "theme_color": "white"
