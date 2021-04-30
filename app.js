@@ -12,6 +12,8 @@ const expressSession = require("express-session");
 const MongoStore = require('connect-mongo');
 const User = require('./models/Registration');
 
+mongoSanitize         = require('express-mongo-sanitize')
+
 
 const app = express();
 
@@ -23,10 +25,18 @@ app.use(expressSession({
     resave :false,
     saveUninitialized: true,
     cookie : {
-            maxAge:(1000 * 60 * 100)
+        httpOnly: true,
+        secure: true,
+        maxAge: 1 * 60 * 1000 //10 minutes
     }
 }));
 
+//=======================
+//      O W A S P
+//=======================
+
+//Data Sanitization against NoSql Injection Attacks
+app.use(mongoSanitize());
 
 
 app.use(passport.initialize());
@@ -64,15 +74,10 @@ passport.use(new LocalStrategy({passReqToCallback: true},(...args) => {
     
         done(null, user);
     })
-    .catch(err => done(err))
-    ;
+    .catch(err => done(err));
 }
 ));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', routes);
-// 
-//app.use('/', routes1);
-app.use(express.static('public'));
+
 
 module.exports = app;

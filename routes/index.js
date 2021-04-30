@@ -22,28 +22,6 @@ router.get('/login', function(req, res) {
     res.render('login', {title: 'Shop'});
 });
 
-router.post('/login', (req, res, next) => {
-    passport.authenticate("local", (err, theUser, errorMessage) => {
-      if (!theUser) {
-        // Unauthorized
-        res.render('login', {errorMessage: 'Wrong password or username'}); 
-        return;
-      }
-  
-      // save user in session: req.user
-      req.login(theUser, (err) => {
-        if (err) {
-          // Session save went bad
-          return next(err);
-        }
-  
-        // All good, we are now logged in and `req.user` is now set
-        res.redirect('/layout')
-      });
-    })(req, res, next);
-});
-
-
 router.get('/layout', function(req, res) {
     res.render('layout', {title: 'Shop'});
 });
@@ -73,6 +51,38 @@ router.get('/registrants',basic.check((req, res) => {
         .catch(() => {res.send('Sorry! Something went wrong.');});
     
 }));
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate("local", (err, theUser, errorMessage) => {
+      if (err) {
+        return next(err);
+      }  
+      if (!theUser) {
+        // Unauthorized
+        res.render('login', {errorMessage: 'Wrong password or username'}); 
+        return;
+      }
+  
+      // save user in session: req.user
+      req.login(theUser, (err) => {
+        if (err) {
+          // Session save went bad
+          return next(err);
+        }
+  
+        // All good, we are now logged in and `req.user` is now set
+        res.redirect('/mylogin')
+      });
+    })(req, res, next);
+});
+
+router.get('/mylogin', function(req, res) {
+    if(!req.user){
+        res.redirect('/login');
+        return;
+    }
+    res.render('mylogin', { user:req.user, title: 'login'});
+});
 
 
 router.post('/',

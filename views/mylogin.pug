@@ -1,0 +1,22 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title  Home 
+  link(rel='stylesheet' href='css/styles.css')
+.message-box
+  h1#welcome-message
+  h4 Welcome {{user.username}}
+  div
+    a(href='/private') Proceed to Admin
+  div
+    a(href='/logout') Log Out
+//- script.
+//-   const req = new XMLHttpRequest();
+//-   req.onreadystatechange = function () {
+//-   if (req.readyState == 4 && req.status ==200){
+//-   const user = JSON.parse(req.response).user;
+//-   document.getElementById("welcome-message").innerText = `Welcome ${user.username}!`;
+//-   }
+//-   };
+//-   req.open("GET","http://localhost:3000/user", true);
+//-   req.send();

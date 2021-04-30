@@ -48,6 +48,16 @@ section.form.my-4.mx-5
             form-row
              .col-lg-7    
                 button(type="submit" class=" btn form-control my-3 p4" value="Register" required) Login
+                label(id="error-message")
             p
               | Don&apos;t have an account 
               a(href='register') Register here
+script.
+  const urlParams = new URLSearchParams(window.location.search);
+          const info = urlParams.get('info');
+
+          if(info){
+              const errorMessage = document.getElementById("error-message");
+              errorMessage.innerText = info;
+              errorMessage.style.display = "block";
+          }              

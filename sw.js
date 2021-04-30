@@ -12,7 +12,7 @@ var filesToCache = [
   '/views/thankyou.pug',
   '/public/css/style.css',
   '/public/css/login.css',
-  '/routes/index.js'
+  '/js/main.js'
 ];
 
 /* Start the service worker and cache all of the app's content */
